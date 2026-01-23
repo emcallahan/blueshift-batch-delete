@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueshift Tool - Mac Launcher Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 700px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .mac-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .step-container {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .step {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 1.1em;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        .step-desc {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        .filename {
+            background: #e5e7eb;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #1f2937;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .security-note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        .security-note strong {
+            color: #92400e;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        .security-note p {
+            color: #78350f;
+            line-height: 1.6;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn.disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .btn.disabled:hover {
+            transform: none;
+        }
+        .help-text {
+            text-align: center;
+            color: #6b7280;
+            margin-top: 30px;
+            font-size: 0.95em;
+        }
+        .help-text a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+        .feature-box {
+            background: #ede9fe;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .feature-box strong {
+            color: #5b21b6;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="mac-icon">🍎</div>
+        <h1>Blueshift Batch Delete Tool</h1>
+        <p class="subtitle">Simple Mac Launcher - No Terminal Required</p>
+
+        <div class="feature-box">
+            <strong>✨ Point & Click Interface</strong><br>
+            Everything works with double-clicking files
+        </div>
+
+        <div class="step-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">First Time Setup</div>
+                    <div class="step-desc">
+                        Double-click: <span class="filename">install.sh</span><br>
+                        Wait for "Installation successful!" message
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Start the Tool</div>
+                    <div class="step-desc">
+                        Double-click: <span class="filename">START - Blueshift Tool.command</span><br>
+                        Your browser opens automatically
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Use the Tool</div>
+                    <div class="step-desc">
+                        Enter your API key → Upload CSV → Process deletions<br>
+                        Watch real-time progress in your browser
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">Stop When Done</div>
+                    <div class="step-desc">
+                        Double-click: <span class="filename">STOP - Blueshift Tool.command</span><br>
+                        Safely shuts down the tool
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="security-note">
+            <strong>🔒 Mac Security</strong>
+            <p>
+                First time running? macOS may show a security warning.<br>
+                <strong>Solution:</strong> Go to System Preferences → Security & Privacy → Click "Open Anyway"
+            </p>
+        </div>
+
+        <div class="btn-container">
+            <a href="http://localhost:3000" class="btn" id="openBtn" target="_blank">
+                Open Tool in Browser
+            </a>
+        </div>
+
+        <div class="help-text">
+            Need more help? See <strong>START HERE.md</strong> or <strong>INSTALL.md</strong>
+        </div>
+    </div>
+
+    <script>
+        // Check if server is running
+        const btn = document.getElementById('openBtn');
+
+        fetch('http://localhost:3000/api/status')
+            .then(response => {
+                if (response.ok) {
+                    btn.textContent = '✅ Open Tool (Running)';
+                    btn.classList.remove('disabled');
+                } else {
+                    throw new Error('Not running');
+                }
+            })
+            .catch(() => {
+                btn.textContent = 'Tool Not Running - Start It First';
+                btn.classList.add('disabled');
+                btn.style.pointerEvents = 'none';
+            });
+    </script>
+</body>
+</html>

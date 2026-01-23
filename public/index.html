@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueshift Batch Delete Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔵 Blueshift Batch Delete Tool</h1>
+            <p class="subtitle">Batch process customer deletions with real-time progress tracking</p>
+        </header>
+
+        <main>
+            <!-- Step 1: API Configuration -->
+            <section class="step" id="step1">
+                <div class="step-header">
+                    <span class="step-number">1</span>
+                    <h2>API Configuration</h2>
+                </div>
+                <div class="step-content">
+                    <div class="form-group">
+                        <label for="apiKey">API Key *</label>
+                        <input type="password" id="apiKey" placeholder="Enter your Blueshift User API Key" required>
+                        <small>Your API key is not stored and only exists in memory during processing.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="region">Region *</label>
+                        <select id="region" required>
+                            <option value="us">United States (US)</option>
+                            <option value="eu">Europe (EU)</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: Upload CSV -->
+            <section class="step" id="step2" disabled>
+                <div class="step-header">
+                    <span class="step-number">2</span>
+                    <h2>Upload CSV File</h2>
+                </div>
+                <div class="step-content">
+                    <div class="form-group">
+                        <label>CSV File *</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                            <div class="upload-prompt">
+                                <span class="upload-icon">📁</span>
+                                <p>Click to upload or drag and drop</p>
+                                <small>CSV files only (max 10MB)</small>
+                            </div>
+                            <div class="file-info" style="display: none;">
+                                <span class="file-name"></span>
+                                <button type="button" class="btn-remove">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="hasHeaders" checked>
+                            CSV file has headers
+                        </label>
+                    </div>
+                    <div id="csvPreview" style="display: none;">
+                        <h4>Preview (first 5 rows)</h4>
+                        <div class="preview-container">
+                            <table id="previewTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: Configure Options -->
+            <section class="step" id="step3" disabled>
+                <div class="step-header">
+                    <span class="step-number">3</span>
+                    <h2>Configure Options</h2>
+                </div>
+                <div class="step-content">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="columnName">CSV Column *</label>
+                            <select id="columnName" required>
+                                <option value="">Select column...</option>
+                            </select>
+                            <small>Select the column containing customer identifiers</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="identifierType">Identifier Type *</label>
+                            <select id="identifierType" required>
+                                <option value="email">Email</option>
+                                <option value="customer_id">Customer ID</option>
+                                <option value="device_id">Device ID</option>
+                                <option value="cookie">Cookie</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="deleteAll">
+                            Delete all matching profiles (up to 50 per identifier)
+                        </label>
+                        <small>By default, only the first matching profile is deleted</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Start Button -->
+            <div class="action-area" id="actionArea" style="display: none;">
+                <button id="startBtn" class="btn btn-primary" disabled>
+                    Start Batch Delete
+                </button>
+                <div class="warning-text">
+                    ⚠️ This will permanently delete customer data. This action is irreversible.
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <section class="step" id="progressSection" style="display: none;">
+                <div class="step-header">
+                    <h2>Processing</h2>
+                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+                <div class="step-content">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">0 / 0 (0%)</div>
+                    </div>
+                    <div class="log-container">
+                        <div class="log-entries" id="logEntries"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Summary Section -->
+            <section class="step" id="summarySection" style="display: none;">
+                <div class="step-header">
+                    <h2>Summary</h2>
+                </div>
+                <div class="step-content">
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="summary-label">Total Processed:</span>
+                            <span class="summary-value" id="summaryTotal">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Successful:</span>
+                            <span class="summary-value success" id="summarySuccess">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Failed:</span>
+                            <span class="summary-value failure" id="summaryFailed">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Duration:</span>
+                            <span class="summary-value" id="summaryDuration">0s</span>
+                        </div>
+                    </div>
+                    <div class="download-actions" id="downloadActions">
+                        <!-- Download buttons will be added here dynamically -->
+                    </div>
+                    <div class="action-area">
+                        <button id="resetBtn" class="btn btn-primary">Start New Batch</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>⚠️ Confirm Deletion</h3>
+            <p id="confirmMessage">This will permanently delete <strong id="confirmCount">0</strong> customer records.</p>
+            <p>This action is <strong>irreversible</strong>.</p>
+            <div class="modal-actions">
+                <button id="confirmYes" class="btn btn-danger">Yes, Delete</button>
+                <button id="confirmNo" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

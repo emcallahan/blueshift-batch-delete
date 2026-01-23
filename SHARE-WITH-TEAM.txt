@@ -1,0 +1,96 @@
+========================================
+HOW TO SHARE THIS TOOL (Mac Team)
+========================================
+
+STEP 1: CREATE ZIP FILE
+------------------------
+Run this command:
+  ./package-for-distribution.sh
+
+This creates a timestamped zip file ready to share.
+
+
+STEP 2: SHARE THE ZIP
+----------------------
+Send the zip file to your team via:
+- Email
+- Slack
+- Google Drive
+- Dropbox
+- Company file share
+
+
+STEP 3: INCLUDE THESE INSTRUCTIONS
+-----------------------------------
+Send this message with the zip:
+
+  "Hey team!
+
+  Attached is the Blueshift Batch Delete Tool.
+
+  TO INSTALL (one time):
+  1. Unzip the folder
+  2. Double-click: install.sh
+  3. Wait for "Installation successful!"
+
+  TO USE:
+  1. Double-click: START - Blueshift Tool.command
+  2. Browser opens automatically
+  3. Enter your API key and upload CSV
+  4. Watch it process in real-time
+  5. Double-click: STOP - Blueshift Tool.command when done
+
+  SECURITY NOTE: If you get a warning, go to:
+  System Preferences → Security & Privacy → Click "Open Anyway"
+
+  FOR HELP: Open LAUNCHER.html or START HERE.md
+
+  Questions? Let me know!"
+
+
+========================================
+
+ALTERNATIVE: GITHUB (for ongoing updates)
+------------------------------------------
+If you want easier updates:
+
+1. Create a private GitHub repo
+2. Push this code:
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin YOUR-REPO-URL
+   git push -u origin main
+
+3. Share repo with team (add as collaborators)
+
+4. They clone and install:
+   git clone YOUR-REPO-URL
+   cd blueshift-batch-delete
+   ./install.sh
+
+5. When you update, they just:
+   git pull
+
+========================================
+
+FILES TO INCLUDE IN ZIP:
+------------------------
+✅ All .js files
+✅ public/ folder
+✅ package.json
+✅ install.sh
+✅ START - Blueshift Tool.command
+✅ STOP - Blueshift Tool.command
+✅ LAUNCHER.html
+✅ START HERE.md
+✅ customers.csv.example
+
+❌ DO NOT include:
+   - node_modules/
+   - logs/
+   - uploads/
+   - .env
+   - .server.pid
+
+========================================

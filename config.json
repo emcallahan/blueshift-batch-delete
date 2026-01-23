@@ -1,0 +1,16 @@
+{
+  "csvFile": "customers.csv",
+  "identifierType": "email",
+  "csvColumnName": "email",
+  "deleteAll": false,
+  "rateLimit": {
+    "baseDelayMs": 100,
+    "maxDelayMs": 5000,
+    "backoffMultiplier": 1.5
+  },
+  "retry": {
+    "maxAttempts": 3,
+    "initialDelayMs": 1000,
+    "backoffMultiplier": 2
+  }
+}
