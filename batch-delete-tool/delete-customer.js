@@ -7,12 +7,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 dotenv.config();
 
-// Configuration
-const CONFIG = {
+// Configuration getter - reads from environment at runtime
+const getConfig = () => ({
   userApiKey: process.env.BLUESHIFT_USER_API_KEY,
   eventApiKey: process.env.BLUESHIFT_EVENT_API_KEY,
   region: process.env.BLUESHIFT_REGION || 'us',
-};
+});
 
 // Get base URL based on region
 const getBaseUrl = (region) => {
@@ -34,6 +34,7 @@ const getBaseUrl = (region) => {
  */
 async function deleteCustomer(options) {
   const silent = options.silent || false;
+  const CONFIG = getConfig(); // Get config at runtime
   // Validate configuration (Delete Customer API uses User API Key)
   if (!CONFIG.userApiKey) {
     throw new Error('Missing User API key. Please set BLUESHIFT_USER_API_KEY in .env file');
@@ -78,6 +79,7 @@ async function deleteCustomer(options) {
     const response = await fetch(url.toString(), {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Authorization': `Basic ${authString}`,
         'Content-Type': 'application/json',
       },

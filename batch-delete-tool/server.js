@@ -75,7 +75,7 @@ app.post('/api/parse-csv', upload.single('file'), (req, res) => {
     const hasHeaders = req.body.hasHeaders === 'true';
     const csvContent = readFileSync(req.file.path, 'utf8');
 
-    const records = parse(csvContent, {
+    let records = parse(csvContent, {
       columns: hasHeaders,
       skip_empty_lines: true,
       trim: true,
@@ -86,14 +86,23 @@ app.post('/api/parse-csv', upload.single('file'), (req, res) => {
       return res.status(400).json({ error: 'CSV file is empty' });
     }
 
-    // Get column names
+    // Get column names and transform records if no headers
     let columns;
     if (hasHeaders) {
       columns = Object.keys(records[0]);
     } else {
-      // If no headers, create column names like "Column 1", "Column 2", etc.
-      const firstRow = records[0];
-      columns = Object.keys(firstRow).map((key, index) => `Column ${index + 1}`);
+      // If no headers, transform array records to objects with "Column N" keys
+      const numColumns = records[0].length;
+      columns = Array.from({ length: numColumns }, (_, i) => `Column ${i + 1}`);
+
+      // Transform records from arrays to objects with "Column N" keys
+      records = records.map(row => {
+        const obj = {};
+        row.forEach((value, index) => {
+          obj[`Column ${index + 1}`] = value;
+        });
+        return obj;
+      });
     }
 
     // Get preview (first 5 rows)
@@ -145,14 +154,27 @@ app.post('/api/start-batch', async (req, res) => {
 
     // Parse CSV
     const csvContent = readFileSync(filePath, 'utf8');
-    const records = parse(csvContent, {
-      columns: hasHeaders === true || hasHeaders === 'true',
+    const hasHeadersBoolean = hasHeaders === true || hasHeaders === 'true';
+    let records = parse(csvContent, {
+      columns: hasHeadersBoolean,
       skip_empty_lines: true,
       trim: true,
     });
 
     if (records.length === 0) {
       return res.status(400).json({ error: 'CSV file is empty' });
+    }
+
+    // Transform records if no headers (same as parse-csv endpoint)
+    if (!hasHeadersBoolean) {
+      const numColumns = records[0].length;
+      records = records.map(row => {
+        const obj = {};
+        row.forEach((value, index) => {
+          obj[`Column ${index + 1}`] = value;
+        });
+        return obj;
+      });
     }
 
     // Validate column exists

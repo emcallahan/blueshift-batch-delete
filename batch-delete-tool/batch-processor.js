@@ -139,6 +139,11 @@ export class BatchProcessor extends EventEmitter {
       silent: true,
     };
 
+    // Debug logging - log first request to verify data
+    if (attempt === 1) {
+      console.log(`[DEBUG] Deleting ${this.identifierType}: "${identifier}" (length: ${identifier?.length || 0})`);
+    }
+
     // Temporarily override API key in environment
     const originalKey = process.env.BLUESHIFT_USER_API_KEY;
     process.env.BLUESHIFT_USER_API_KEY = this.apiKey;

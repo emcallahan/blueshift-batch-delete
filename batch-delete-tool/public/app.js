@@ -60,8 +60,12 @@ function init() {
     // Step 2: File Upload
     fileUploadArea.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', handleFileSelect);
-    hasHeadersCheckbox.addEventListener('change', () => {
+    hasHeadersCheckbox.addEventListener('change', async () => {
         state.hasHeaders = hasHeadersCheckbox.checked;
+        // Re-parse the file if one is already uploaded
+        if (state.file) {
+            await uploadFile(state.file);
+        }
     });
 
     // Drag and drop
