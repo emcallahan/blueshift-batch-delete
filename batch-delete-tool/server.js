@@ -184,6 +184,25 @@ app.post('/api/start-batch', async (req, res) => {
       });
     }
 
+    // Deduplicate records based on the selected column
+    const originalCount = records.length;
+    const seen = new Set();
+    const uniqueRecords = [];
+
+    for (const record of records) {
+      const identifier = record[columnName];
+      if (identifier && !seen.has(identifier)) {
+        seen.add(identifier);
+        uniqueRecords.push(record);
+      }
+    }
+
+    const duplicatesRemoved = originalCount - uniqueRecords.length;
+    console.log(`Deduplication: ${originalCount} total records, ${uniqueRecords.length} unique, ${duplicatesRemoved} duplicates removed`);
+
+    // Use deduplicated records
+    records = uniqueRecords;
+
     // Create batch processor
     const processor = new BatchProcessor({
       records,
@@ -271,6 +290,8 @@ app.post('/api/start-batch', async (req, res) => {
     res.json({
       jobId: Date.now(),
       totalRecords: records.length,
+      originalCount: originalCount,
+      duplicatesRemoved: duplicatesRemoved,
       message: 'Batch processing started'
     });
 

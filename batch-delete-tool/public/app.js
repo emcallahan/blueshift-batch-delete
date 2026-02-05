@@ -283,6 +283,12 @@ async function startBatch() {
         actionArea.style.display = 'none';
         progressSection.style.display = 'block';
 
+        // Show deduplication info if duplicates were removed
+        if (data.duplicatesRemoved > 0) {
+            addLogEntry(`📊 Found ${data.originalCount} total records, ${data.duplicatesRemoved} duplicates removed`, 'info');
+            addLogEntry(`Processing ${data.totalRecords} unique records...`, 'info');
+        }
+
         // Connect to SSE
         connectSSE();
 
